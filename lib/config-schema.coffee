@@ -62,7 +62,7 @@ module.exports =
         type: "integer"
         default: 1
         minimum: 0
-        maximum: 100
+        maximum: 0
 
       maxIntensity:
         title: "Screen Shake - Maximum Intensity"
