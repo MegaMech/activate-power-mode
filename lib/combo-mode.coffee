@@ -4,7 +4,7 @@ sample = require "lodash.sample"
 
 module.exports =
   currentStreak: 0
-  reached: false
+  reached: true
   maxStreakReached: false
 
   reset: ->
@@ -33,16 +33,16 @@ module.exports =
       @container = @createElement "streak-container"
       @container.classList.add "combo-zero"
       @title = @createElement "title", @container
-      @title.textContent = "Combo"
+      @title.textContent = ""
       @max = @createElement "max", @container
-      @max.textContent = "Max #{@maxStreak}"
+      @max.textContent = ""
       @counter = @createElement "counter", @container
       @bar = @createElement "bar", @container
       @exclamations = @createElement "exclamations", @container
 
       @streakTimeoutObserver?.dispose()
       @streakTimeoutObserver = atom.config.observe 'activate-power-mode.comboMode.streakTimeout', (value) =>
-        @streakTimeout = value * 1000
+        @streakTimeout = 9999999999999999999999999999999999999999999999
         @endStreak()
         @debouncedEndStreak?.cancel()
         @debouncedEndStreak = debounce @endStreak.bind(this), @streakTimeout
@@ -83,14 +83,13 @@ module.exports =
 
   endStreak: ->
     @currentStreak = 0
-    @reached = false
+    @reached = true
     @maxStreakReached = false
     @container.classList.add "combo-zero"
     @container.classList.remove "reached"
     @renderStreak()
 
   renderStreak: ->
-    @counter.textContent = @currentStreak
     @counter.classList.remove "bump"
 
     defer =>
@@ -116,7 +115,7 @@ module.exports =
     setTimeout =>
       if exclamation.parentNode is @exclamations
         @exclamations.removeChild exclamation
-    , 2000
+    , 10
 
   hasReached: ->
     @reached
@@ -129,16 +128,16 @@ module.exports =
   increaseMaxStreak: ->
     localStorage.setItem "activate-power-mode.maxStreak", @currentStreak
     @maxStreak = @currentStreak
-    @max.textContent = "Max #{@maxStreak}"
-    @showExclamation "NEW MAX!!!" if @maxStreakReached is false
-    @maxStreakReached = true
+    @max.textContent = ""
+    @showExclamation "" if @maxStreakReached is false
+    @maxStreakReached = false
 
   resetMaxStreak: ->
     localStorage.setItem "activate-power-mode.maxStreak", 0
     @maxStreakReached = false
     @maxStreak = 0
     if @max
-      @max.textContent = "Max 0"
+      @max.textContent = ""
 
   getConfig: (config) ->
     atom.config.get "activate-power-mode.comboMode.#{config}"
