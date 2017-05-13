@@ -2,6 +2,8 @@
 
 A package for Atom to replicate the effects from [codeinthedark/editor](https://github.com/codeinthedark/editor).
 
+WHAT IS CHANGED IN MY VERSION? No shake, no UI, no counter, no combo. Only the fancy bubble things appear while you type.
+
 ![activate-power-mode-0 4 0](https://cloud.githubusercontent.com/assets/688415/11615565/10f16456-9c65-11e5-8af4-265f01fc83a0.gif)
 
 Now with a COMBO MODE!!!
